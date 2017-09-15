@@ -17,22 +17,22 @@ func main()  {
 
 	fmt.Println(v)
 	//测试yara检测
-	yarainfo:=webshell.Yara("D:/code/python/Oops-Webshell/lib/data/php.yar","D:/phpStudy/WWW/")
+	yarainfo:=webshell.Yara("D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/php.yar","D:/phpStudy/WWW/")
 
 	yl:=len(yarainfo)
 	for i:=0;i<yl;i++{
-		fmt.Println(yarainfo[i]["type"])
-		fmt.Println(yarainfo[i]["path"])
+
+		fmt.Println(yarainfo[i]["type"],"----",yarainfo[i]["path"])
+
 	}
 
 	//测试ssdeep检测
-	ssdeepinfo:=webshell.Ssdeep("D:/code/python/Oops-Webshell/lib/data/php.ssdeep","D:/phpStudy/WWW/")
+	ssdeepinfo:=webshell.Ssdeep("D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/php.ssdeep","./")
 
 	sl:=len(ssdeepinfo)
 
 	for i:=0;i<sl;i++{
-		fmt.Println(ssdeepinfo[i]["type"])
-		fmt.Println(ssdeepinfo[i]["path"])
+		fmt.Println(ssdeepinfo[i]["type"],"----",ssdeepinfo[i]["path"],"----",ssdeepinfo[i]["like"])
 	}
 
 

@@ -26,7 +26,7 @@ func Yara(rule_path,dir_path string) ([]map[string]string)  {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(6000)*time.Second)
 	defer cancel()
 
-	str,err:=subprocess.RunCommand(ctx,"D:/code/python/Oops-Webshell/lib/tools/yara.exe","-r",rule_path,dir_path)
+	str,err:=subprocess.RunCommand(ctx,"D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/tools/yara.exe",rule_path,"-r",dir_path)
 	if err!=nil{
 		fmt.Println(err.Error())
 	}
@@ -62,7 +62,7 @@ func Ssdeep(rule_path,dir_path string) ([]map[string]string)  {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(6000)*time.Second)
 	defer cancel()
 
-	str,err:=subprocess.RunCommand(ctx,"D:/code/python/Oops-Webshell/lib/tools/ssdeep.exe","-bsm",rule_path,"-r",dir_path,"-t","45","-c")
+	str,err:=subprocess.RunCommand(ctx,"D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/tools/ssdeep.exe","-bsm",rule_path,"-r",dir_path,"-t","45","-c")
 	if err!=nil{
 		fmt.Println(err.Error())
 	}
@@ -73,15 +73,19 @@ func Ssdeep(rule_path,dir_path string) ([]map[string]string)  {
 
 	for _,file_dir:=range s{
 
-		var file_type,file_path string
+		var file_type,file_path,file_like string
 
 		if len(file_dir)>0{
 			ss:=strings.Split(file_dir," ")
-			file_type=ss[0]
-			file_path=ss[1]
+			file_type=ss[2]
+			file_path=ss[0]
+			file_like=ss[3]
+			file_like=strings.Replace(file_like,"(","",-1)
+			file_like=strings.Replace(file_like,")","",-1)
 
-			res["type"]=file_type
+			res["type"]=strings.Split(file_type,":")[2]
 			res["path"]=file_path
+			res["like"]=file_like
 			funny_res=append(funny_res,res)
 		}
 	}
