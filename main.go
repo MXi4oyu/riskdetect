@@ -8,7 +8,7 @@ import (
 )
 
 func main()  {
-	config,err := config.NewConfig("D:/code/go/gopath/src/github.com/MXi4oyu/godome/rdini/config.ini")
+	config,err := config.NewConfig("./config.ini")
 	if err!=nil{
 		log.Fatal(err.Error())
 	}
@@ -17,7 +17,7 @@ func main()  {
 
 	fmt.Println(v)
 	//测试yara检测
-	yarainfo:=webshell.Yara("D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/php.yar","D:/phpStudy/WWW/")
+	yarainfo:=webshell.Yara("./libs/php.yar","/var/www/")
 
 	yl:=len(yarainfo)
 	for i:=0;i<yl;i++{
@@ -27,7 +27,7 @@ func main()  {
 	}
 
 	//测试ssdeep检测
-	ssdeepinfo:=webshell.Ssdeep("D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/php.ssdeep","./")
+	ssdeepinfo:=webshell.Ssdeep("./libs/php.ssdeep","/var/www/")
 
 	sl:=len(ssdeepinfo)
 

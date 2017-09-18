@@ -20,13 +20,14 @@ func Webshelldetect(shell_path ,ssdeep_features_path,yara_rule_path string) []st
 
 func Yara(rule_path,dir_path string) ([]map[string]string)  {
 
-	res:=make(map[string]string)
+
 	funny_res := make([]map[string]string,0,100)
+
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(6000)*time.Second)
 	defer cancel()
 
-	str,err:=subprocess.RunCommand(ctx,"D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/tools/yara.exe",rule_path,"-r",dir_path)
+	str,err:=subprocess.RunCommand(ctx,"yara",rule_path,"-r",dir_path)
 	if err!=nil{
 		fmt.Println(err.Error())
 	}
@@ -40,14 +41,20 @@ func Yara(rule_path,dir_path string) ([]map[string]string)  {
 		var file_type,file_path string
 
 		if len(file_dir)>0{
+
+			res:=make(map[string]string)
+
 			ss:=strings.Split(file_dir," ")
 			file_type=ss[0]
 			file_path=ss[1]
 
 			res["type"]=file_type
 			res["path"]=file_path
+
 			funny_res=append(funny_res,res)
+
 		}
+
 	}
 
 	return funny_res
@@ -56,13 +63,12 @@ func Yara(rule_path,dir_path string) ([]map[string]string)  {
 
 func Ssdeep(rule_path,dir_path string) ([]map[string]string)  {
 
-	res:=make(map[string]string)
 	funny_res := make([]map[string]string,0,100)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(6000)*time.Second)
 	defer cancel()
 
-	str,err:=subprocess.RunCommand(ctx,"D:/code/go/gopath/src/github.com/MXi4oyu/riskdetect/libs/tools/ssdeep.exe","-bsm",rule_path,"-r",dir_path,"-t","45","-c")
+	str,err:=subprocess.RunCommand(ctx,"ssdeep","-bsm",rule_path,"-r",dir_path,"-t","45","-c")
 	if err!=nil{
 		fmt.Println(err.Error())
 	}
@@ -76,6 +82,9 @@ func Ssdeep(rule_path,dir_path string) ([]map[string]string)  {
 		var file_type,file_path,file_like string
 
 		if len(file_dir)>0{
+
+			res:=make(map[string]string)
+
 			ss:=strings.Split(file_dir," ")
 			file_type=ss[2]
 			file_path=ss[0]
