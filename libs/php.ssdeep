@@ -1,4 +1,3 @@
-sdeep,1.1--blocksize:hash:hash,filename
 768:pmBlKtRvn+PA/ZRI70AMXpFnM6KDNgvWhYM1X:pmBlKjPQP0jXpFnM6ynY+X,"devshell.php"
 768:poyDQrcbylu/K7snS6knZ/rfmw8rj1DGW3c1hIUiTr3u9:poyDQrcbH/KwnC/erNGW3eliTr3c,"devilzShell.php"
 3:gzIT1cNc9rdVHd8koQ:gzuWc9rt8koQ,"php_assert.php"
@@ -477,7 +476,5 @@ sdeep,1.1--blocksize:hash:hash,filename
 3072:5ros5s3+N6DKrrituut0xmqKs+xkzWo2nidyaNScB:Zos54+NoKrrituut0xmqKsgkzWo2nid7,"w4k.php.txt"
 3072:5xNSTRD+N6DKr9ituutTxmaKsgRAzWotTiHIvNSC:5xNS9+NoKr9ituutTxmaKsUAzWotTiHM,"w.php.txt"
 96:S5Wrdyg6zUA+pV3shkl+nFzovx1z3LgSLgtchCo6ycAVHQwfYr3hH6YXz:S9zUA+zjPvXEcf6sVHTfEhHXXz,"w3d.php.txt"
-ssdeep,1.1--blocksize:hash:hash,filename
-3:42EJIxL4fqn:42E2xMin,"1.php"
-ssdeep,1.1--blocksize:hash:hash,filename
-3:42EJIxL4fqn:42E2xMin,"1.php"
+3:42EJIx37MNn:42E2xYNn,"shell.php"
+3:YD6xL4fYvn:Y2xMwvn,"/var/www/shell.php"
