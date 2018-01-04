@@ -15,14 +15,8 @@ import (
 	"strconv"
 )
 
-func Webshelldetect(shell_path ,ssdeep_features_path,yara_rule_path string) []string {
+var whitelists = make([] string,50,100)
 
-	res1:=make([]string,10,50)
-	res2:=make([]string,10,50)
-
-	res1=append(res1,res2[:]...)
-	return res1
-}
 
 func Yara(rule_path,dir_path string) ([]map[string]string)  {
 
@@ -54,12 +48,28 @@ func Yara(rule_path,dir_path string) ([]map[string]string)  {
 			file_type=ss[0]
 			file_path=ss[1]
 
-			res["type"]=file_type
-			res["path"]=file_path
-			res["level"]="danger"
-			res["like"]="100"
+			if file_type[0:5]=="safe_"{
 
-			funny_res=append(funny_res,res)
+				//白名单
+				continue
+
+			}else{
+
+				res["type"]=file_type
+				res["path"]=file_path
+				res["level"]="danger"
+				res["like"]="100"
+
+				for _,wf:= range whitelists{
+
+					if wf != file_path{
+						
+					}
+				}
+
+				funny_res=append(funny_res,res)
+			}
+
 
 		}
 
@@ -154,11 +164,11 @@ func Ssdeep(rule_path,dir_path,suffix string) ([]map[string]string)  {
 						res["level"]="info"
 						funny_res=append(funny_res,res)
 						break
-					case 6,7,8:
+					case 6,7:
 						res["level"]="warning"
 						funny_res=append(funny_res,res)
 						break
-					case 9,10:
+					case 8,9,10:
 						res["level"]="danger"
 						funny_res=append(funny_res,res)
 						break
@@ -166,7 +176,6 @@ func Ssdeep(rule_path,dir_path,suffix string) ([]map[string]string)  {
 
 				}else{
 
-					//fmt.Println("safe")
 				}
 			}
 		}

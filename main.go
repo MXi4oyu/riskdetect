@@ -2,8 +2,6 @@ package main
 
 import (
 	_"github.com/MXi4oyu/Utils/config"
-	_"fmt"
-	_"log"
 	"github.com/MXi4oyu/riskdetect/webshell"
 	"github.com/MXi4oyu/Utils/config"
 	"log"
@@ -22,7 +20,9 @@ func main()  {
 
 
 	//测试yara检测
-	yarainfo:=webshell.Yara("./libs/php.yar","/var/www/")
+	//yarainfo:=webshell.Yara("./libs/php.yar","/var/www")
+
+	yarainfo:=webshell.Yara("./libs/php.yar","/var/www/phpMyAdmin")
 
 	yl:=len(yarainfo)
 	for i:=0;i<yl;i++{
