@@ -186,6 +186,7 @@ func Ssdeep(rule_path,dir_path,suffix string) ([]map[string]string)  {
 
 	}
 
+	filehashmap = make([]string, 0, 100)
 
 
 	return funny_res
