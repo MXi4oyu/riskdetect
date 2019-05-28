@@ -79,46 +79,47 @@ func Yara(rule_path,dir_path string) ([]map[string]string)  {
 
 }
 
-var filehashmap = make([]string,0,100)
-
 //处理每一行
-func processLine(line []byte)  {
+func processLine(line []byte) (string) {
 
-	linestr:=string(line)
-	linearray:=strings.Split(linestr,",")
-	linehash:=linearray[0]
-	filehashmap=append(filehashmap,linehash)
+	linestr := string(line)
+	linearray := strings.Split(linestr, ",")
+	linehash := linearray[0]
+	return linehash
 
 }
 
 //逐行读取文件
-func FileReadLine(filepath string,hookfunc func([] byte)) error  {
+func FileReadLine(filepath string, hookfunc func([]byte)(string)) ([]string,error) {
 
-	f,err:=os.Open(filepath)
-	if err!=nil{
-		return err
+	var filehashmap = make([]string, 0, 100)
+
+	f, err := os.Open(filepath)
+	if err != nil {
+		return filehashmap,err
 	}
 
 	defer f.Close()
 
-	mybufReader:=bufio.NewReader(f)
+	mybufReader := bufio.NewReader(f)
 
-	for{
-		line,err:=mybufReader.ReadBytes('\n')
-		hookfunc(line)
-
-		if err!=nil{
-			if err==io.EOF{
-				return nil
+	for {
+		line, err := mybufReader.ReadBytes('\n')
+		linehash:=hookfunc(line)
+		filehashmap = append(filehashmap, linehash)
+		if err != nil {
+			if err == io.EOF {
+				return filehashmap,nil
 			}
 
-			return err
+			return filehashmap,err
 		}
 	}
 
-	return nil
+	return filehashmap,nil
 
 }
+
 
 
 func Ssdeep(rule_path,dir_path,suffix string) ([]map[string]string)  {
@@ -126,8 +127,11 @@ func Ssdeep(rule_path,dir_path,suffix string) ([]map[string]string)  {
 	funny_res := make([]map[string]string,0,100)
 
 	//提取所有样本文件中的hash
-	FileReadLine(rule_path,processLine)
-	//fmt.Println(filehashmap)
+	filehashmap,err:=FileReadLine(rule_path, processLine)
+
+	if err!=nil{
+		return nil
+	}
 
 	//遍历要检测的目录下的所有文件
 	files,err:=walkpath.WalkDir(dir_path,suffix)
